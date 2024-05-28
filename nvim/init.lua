@@ -1,4 +1,2 @@
-require("options")
-require("keymaps")
-require("autocmds")
-require("plugins")
+require("lucasttmz.core")
+require("lucasttmz.lazy")

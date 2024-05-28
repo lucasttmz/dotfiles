@@ -1,64 +1,4 @@
--- Instala o Lazy.nvim
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-    local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-    vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
-end ---@diagnostic disable-next-line: undefined-field
-vim.opt.rtp:prepend(lazypath)
-
-require('lazy').setup({
-    -- Colorscheme
-    { 
-        "catppuccin/nvim", 
-        name = "catppuccin",
-        priority = 1000,
-        config = function()
-            vim.cmd.colorscheme('catppuccin')
-        end
-    },
-
-    -- Status line
-    {
-        'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
-        init = function()
-            require('lualine').setup()
-        end,
-    },
-
-    -- Comenta bloco visual com "gc"
-    { 'numToStr/Comment.nvim', opts = {} },
-
-    -- Adiciona simbolos para demonstrar as mudanças dos arquivos
-    { 
-        'lewis6991/gitsigns.nvim',
-        opts = {
-            signs = {
-                add = { text = '+' },
-                change = { text = '~' },
-                delete = { text = '_' },
-                topdelete = { text = '‾' },
-                changedelete = { text = '~' },
-            },
-        },
-    },
-
-    {
-        'folke/which-key.nvim',
-        event = 'VimEnter',
-        config = function()
-            require('which-key').setup()
-            require('which-key').register {
-                ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-                ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-                ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-                ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-                ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-            }
-        end,
-    },
-
-    -- Fuzzy Finder (arquivos, lsp, etc)
+return {
     { 
         'nvim-telescope/telescope.nvim',
         event = 'VimEnter',
@@ -119,31 +59,4 @@ require('lazy').setup({
             end, { desc = '[S]earch [N]eovim files' })
         end,
     },
-
-    {
-        'folke/todo-comments.nvim', 
-        event = 'VimEnter',
-        dependencies = { 'nvim-lua/plenary.nvim' }, 
-        opts = { signs = false }
-    },
-
-    {
-        "nvim-treesitter/nvim-treesitter",
-        config = function()
-            require("nvim-treesitter.configs").setup({
-                ensure_installed = {"c", "lua", "vim", "vimdoc", "query", "python", "bash", "markdown"},
-
-                auto_install = true,
-
-                highlight = {
-                    enable = true,
-                }
-            })
-        end,
-    },
-})
-
--- Desativa o highlight semantico (se precisar quando ativar LSP)
--- for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
---   vim.api.nvim_set_hl(0, group, {})
--- end
+}

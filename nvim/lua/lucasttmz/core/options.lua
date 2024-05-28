@@ -73,3 +73,7 @@ vim.opt.virtualedit = "block"
 
 -- Marca as palavras durante a busca até pressionar <ESC> no modo normal
 vim.opt.hlsearch = true
+
+-- Seta linewrap e wordwrap
+vim.opt.linebreak = true
+vim.opt.wrap = true
